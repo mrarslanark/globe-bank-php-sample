@@ -5,6 +5,7 @@ Course links <br />
 [PHP with MySQL Essential Training: 2 Build a CMS](https://www.linkedin.com/learning/php-with-mysql-essential-training-2-build-a-cms)
 
 ## Run this project
+
 1. Clone the repo
 2. You should have either WAMP or XAMP installed on your computer.
 3. Add the cloned repo directory to the Apache Alias
@@ -12,4 +13,6 @@ Course links <br />
 5. Change the Database Credentials in private -> db_credentials.php
 6. Run the server and navigate to public and edit the URL by concatinating public/staff
 
-### Fork it, to change it
+## Note
+
+This project is a sample from LinkedIn Learning course edited based on lesson content.

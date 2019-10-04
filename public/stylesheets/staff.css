@@ -130,3 +130,10 @@ dd {
   margin-bottom: 0;
   padding-left: 1em;
 }
+
+#message {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: darkgreen;
+  padding: 20px;
+  margin: 20px auto;
+}

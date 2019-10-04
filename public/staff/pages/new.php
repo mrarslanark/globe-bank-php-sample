@@ -1,37 +1,34 @@
-<?php
-    
-    require_once('../../../private/initialize.php');
+<?php 
+  require_once('../../../private/initialize.php');
+  require_login();
+  if (is_post_request()) {
 
-    if (is_post_request()) {
+    $page = [];
+    $page['subject_id'] = $_POST['subject_id'];
+    $page['menu_name'] = $_POST['menu_name'];
+    $page['position'] = $_POST['position'];
+    $page['visible'] = $_POST['visible'];
+    $page['content'] = $_POST['content'];
 
-      $page = [];
-      $page['subject_id'] = $_POST['subject_id'];
-      $page['menu_name'] = $_POST['menu_name'];
-      $page['position'] = $_POST['position'];
-      $page['visible'] = $_POST['visible'];
-      $page['content'] = $_POST['content'];
-
-      $result = insert_page($page);
-      if ($result === true) {
-        $new_id = mysqli_insert_id($db);
-        redirect_to(url_for('/staff/pages/show.php?id=' . $new_id));
-      } else {
-        $errors = $result;
-      }
-
+    $result = insert_page($page);
+    if ($result === true) {
+      $new_id = mysqli_insert_id($db);
+      $_SESSION['status_message'] = "Page inserted successfully!";
+      redirect_to(url_for('/staff/pages/show.php?id=' . $new_id));
     } else {
-      $page = [];
-      $page['subject_id'] = '';
-      $page['menu_name'] = '';
-      $page['position'] = '';
-      $page['visible'] = '';
-      $page['content'] = '';
+      $errors = $result;
     }
 
-    $page_set = find_all_pages();
-    $page_count = mysqli_num_rows($page_set) + 1;
-    mysqli_free_result($page_set);
+  } else {
+    $page = [];
+    $page['subject_id'] = $_GET['subject_id'] ?? '1';
+    $page['menu_name'] = '';
+    $page['position'] = '';
+    $page['visible'] = '';
+    $page['content'] = '';
+  }
 
+  $page_count = count_pages_by_subject_id($page['subject_id']) + 1;
 ?>
 
 <?php $page_title = 'Create Page' ?>
@@ -39,9 +36,9 @@
 
 <div id="content">
 
-  <a class="back-line" href="<?php echo url_for('/staff/pages/index.php') ?>"
-    >&laquo; Back to List</a
-  >
+  <a class="back-link"
+    href="<?php echo url_for('/staff/subjects/show.php?id=' . h(u($page['subject_id']))); ?>">&laquo; Back to Subject List</a>
+
 
   <div class="page new">
     <h1>Create Page</h1>

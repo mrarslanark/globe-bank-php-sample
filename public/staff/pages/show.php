@@ -1,22 +1,26 @@
-<?php require_once('../../../private/initialize.php'); ?>
-
-<?php include(SHARED_PATH . '/staff_header.php'); ?>
-<?php 
-    $id = $_GET['id'] ?? 1;
-    $page = find_page_by_id($id);
+<?php
+  require_once('../../../private/initialize.php');
+  require_login();
+  $id = $_GET['id'] ?? 1;
+  $page = find_page_by_id($id);
+  $subject = find_subject_by_id($page['subject_id']);
 ?>
-
+<?php include(SHARED_PATH . '/staff_header.php'); ?>
 <div id="content">
-  <a
-    class="back-link"
-    href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a><br />
+
+  <a class="back-link"
+    href="<?php echo url_for('/staff/subjects/show.php?id=' . h(u($subject['id']))); ?>">&laquo; Back to Subject List</a>
+
   <div class="pages show">
     <h1>
       Page: <?php echo h($page['menu_name']); ?>
     </h1>
 
+    <div class="actions">
+      <a class="action" href="<?php echo url_for('/index.php?id=' . h(u($page['id'])) . "&preview=true"); ?>" target="_blank">Preview</a>
+    </div>
+
     <div class="attributes">
-      <?php $subject = find_subject_by_id($page['subject_id']); ?>
       <dl>
         <dt>Subject</dt>
         <dd><?php echo h($subject['menu_name']); ?></dd>
